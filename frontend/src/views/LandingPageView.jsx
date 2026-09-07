@@ -147,7 +147,7 @@ export default function LandingPageView({ onOpenLogin, onOpenSignup, onOpenForgo
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
               <button className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '15px' }} onClick={onEnterApp}>
-                <span>Launch Cafe App</span>
+                <span>{user ? `Go to Workspace (${user.name})` : 'Get Started / Login'}</span>
                 <ArrowRight size={18} />
               </button>
               <button className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '15px' }} onClick={scrollToBestSellers}>
