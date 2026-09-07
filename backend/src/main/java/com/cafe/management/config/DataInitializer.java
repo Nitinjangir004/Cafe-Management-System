@@ -40,9 +40,13 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        initUsers();
-        initCategoriesAndProducts();
-        initSampleBills();
+        try {
+            initUsers();
+            initCategoriesAndProducts();
+            initSampleBills();
+        } catch (Exception e) {
+            log.error("Data initialization encountered an error: {}", e.getMessage(), e);
+        }
     }
 
     private void initUsers() {
