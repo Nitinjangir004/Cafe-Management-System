@@ -43,7 +43,7 @@ public class CafeBill {
     @Column(name = "created_by", length = 100)
     private String createdBy;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", columnDefinition = "datetime", updatable = false)
     private LocalDateTime createdAt;
 
     public CafeBill() {}
