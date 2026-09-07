@@ -21,27 +21,18 @@ import { dashboardApi } from './services/api';
 import { CheckCircle2, AlertCircle, X } from 'lucide-react';
 
 export default function App() {
-  // Default session: auto-load from localStorage or default to Admin User
+  // Session: load from localStorage if user has previously logged in, otherwise null
   const [user, setUser] = useState(() => {
     try {
       const saved = localStorage.getItem('cafe_user');
-      return saved ? JSON.parse(saved) : {
-        name: 'Admin User',
-        email: 'admin@mail.com',
-        role: 'admin',
-        contactNumber: '9876543210'
-      };
+      return saved ? JSON.parse(saved) : null;
     } catch {
-      return {
-        name: 'Admin User',
-        email: 'admin@mail.com',
-        role: 'admin',
-        contactNumber: '9876543210'
-      };
+      return null;
     }
   });
 
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // Always start on the landing page initially
+  const [activeTab, setActiveTab] = useState('landing');
   const [backendOnline, setBackendOnline] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -107,15 +98,21 @@ export default function App() {
     setActiveTab('dashboard');
   };
 
-  // If user is on the public landing page
-  if (activeTab === 'landing') {
+  // If user is on the public landing page or not authenticated yet
+  if (activeTab === 'landing' || !user) {
     return (
       <>
         <LandingPageView
           user={user}
           theme={theme}
           toggleTheme={toggleTheme}
-          onEnterApp={() => setActiveTab('dashboard')}
+          onEnterApp={() => {
+            if (user) {
+              setActiveTab('dashboard');
+            } else {
+              setIsLoginOpen(true);
+            }
+          }}
           onOpenLogin={() => setIsLoginOpen(true)}
           onOpenSignup={() => setIsSignupOpen(true)}
           onOpenForgotPassword={() => setIsForgotPassOpen(true)}
