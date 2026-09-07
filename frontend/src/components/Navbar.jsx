@@ -16,8 +16,7 @@ import {
   Wifi,
   WifiOff,
   Sun,
-  Moon,
-  User as UserIcon
+  Moon
 } from 'lucide-react';
 
 export default function Navbar({
@@ -54,71 +53,36 @@ export default function Navbar({
   ];
 
   return (
-    <header style={{
-      background: 'var(--bg-sidebar)',
-      borderBottom: '1px solid var(--border)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 100,
-    }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '10px 20px',
-        maxWidth: '1800px',
-        margin: '0 auto',
-      }}>
+    <header className="app-navbar">
+      <div className="navbar-inner">
         {/* Left: Brand & Sidebar Toggle */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div className="navbar-left">
           <button
             className="btn btn-ghost"
             style={{ padding: '8px', color: 'var(--text-main)' }}
             onClick={onToggleSidebar}
             title="Toggle Sidebar"
+            aria-label="Toggle Navigation Menu"
           >
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
 
           <div
-            style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
+            className="navbar-brand"
             onClick={() => setActiveTab('dashboard')}
           >
-            <div style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, var(--accent-amber), #b45309)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#000',
-              boxShadow: '0 0 12px var(--accent-glow)',
-            }}>
-              <Store size={22} />
+            <div className="navbar-logo">
+              <Store size={20} />
             </div>
-            <div>
-              <div style={{
-                fontFamily: 'var(--font-heading)',
-                fontSize: '1.1rem',
-                fontWeight: '800',
-                letterSpacing: '-0.02em',
-                color: 'var(--text-main)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
-                Cafe Management System
-              </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Enterprise Operations
-              </div>
+            <div className="navbar-brand-text">
+              <div className="navbar-title">Cafe Management</div>
+              <div className="navbar-subtitle hidden-mobile">Enterprise Operations</div>
             </div>
           </div>
         </div>
 
-        {/* Center: Desktop Navigation Tabs */}
-        <nav className="navbar-tabs-container hidden-mobile">
+        {/* Center: Desktop Navigation Tabs (Hidden on tablets & mobile; accessible via Sidebar) */}
+        <nav className="navbar-tabs-container hidden-tablet">
           {navTabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -135,39 +99,22 @@ export default function Navbar({
           })}
         </nav>
 
-        {/* Right: Clock, Online Status, & Profile Menu */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {/* Live Clock */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            fontSize: '12px',
-            fontFamily: 'var(--font-mono)',
-            color: 'var(--text-muted)',
-            padding: '6px 10px',
-            background: 'var(--bg-surface)',
-            borderRadius: 'var(--radius-sm)',
-            border: '1px solid var(--border)',
-          }}>
+        {/* Right: Clock, Online Status, Theme & Profile Menu */}
+        <div className="navbar-right">
+          {/* Live Clock (Hidden on tablet/mobile) */}
+          <div className="navbar-clock hidden-tablet">
             <Clock size={13} className="text-amber" />
             <span>{time}</span>
           </div>
 
-          {/* Backend Status */}
+          {/* Backend Status (Icon only on mobile) */}
           <div
+            className="navbar-status"
             title={backendOnline ? 'REST API Online' : 'Backend Disconnected'}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '12px',
-              color: backendOnline ? 'var(--success)' : 'var(--danger)',
-              padding: '6px 8px',
-            }}
+            style={{ color: backendOnline ? 'var(--success)' : 'var(--danger)' }}
           >
-            {backendOnline ? <Wifi size={15} /> : <WifiOff size={15} />}
-            <span style={{ fontSize: '11px', fontWeight: 600 }} className="hidden-mobile">
+            {backendOnline ? <Wifi size={16} /> : <WifiOff size={16} />}
+            <span className="hidden-mobile">
               {backendOnline ? 'API Connected' : 'Offline'}
             </span>
           </div>
@@ -176,13 +123,7 @@ export default function Navbar({
           <button
             onClick={toggleTheme}
             className="btn btn-secondary btn-sm"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 10px',
-              cursor: 'pointer',
-            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '6px 9px' }}
             title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
           >
             {theme === 'dark' ? (
@@ -202,34 +143,16 @@ export default function Navbar({
           {user ? (
             <div style={{ position: 'relative' }}>
               <button
-                className="btn btn-secondary btn-sm"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '6px 12px',
-                }}
+                className="btn btn-secondary btn-sm navbar-profile-btn"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
+                title={user.name}
               >
-                <div style={{
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  background: 'var(--accent-amber)',
-                  color: '#000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 800,
-                  fontSize: '11px'
-                }}>
-                  {user.name.charAt(0).toUpperCase()}
+                <div className="navbar-avatar">
+                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                 </div>
-                <div style={{ textAlign: 'left', lineHeight: 1.2 }}>
-                  <div style={{ fontSize: '12px', fontWeight: 700 }}>{user.name}</div>
-                  <div style={{ fontSize: '10px', color: 'var(--accent-amber)', textTransform: 'uppercase' }}>
-                    {user.role}
-                  </div>
+                <div className="navbar-user-info hidden-mobile">
+                  <div className="navbar-user-name">{user.name}</div>
+                  <div className="navbar-user-role">{user.role}</div>
                 </div>
               </button>
 
@@ -294,7 +217,7 @@ export default function Navbar({
               )}
             </div>
           ) : (
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '6px' }}>
               <button className="btn btn-secondary btn-sm" onClick={onOpenSignup}>
                 Sign Up
               </button>
