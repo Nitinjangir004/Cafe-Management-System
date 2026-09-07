@@ -15,40 +15,33 @@ export default function LandingPageView({ onOpenLogin, onOpenSignup, onOpenForgo
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-app)', color: 'var(--text-main)' }}>
       {/* Sticky Public Navbar */}
-      <header style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        background: 'rgba(15, 14, 19, 0.85)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--border)',
-        padding: '16px 24px'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+      <header className="landing-header">
+        <div className="landing-header-inner">
+          <div className="landing-brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '10px',
+              width: '36px',
+              height: '36px',
+              borderRadius: '8px',
               background: 'linear-gradient(135deg, var(--accent-amber) 0%, #b45309 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: '#000',
-              boxShadow: '0 0 16px var(--accent-glow)'
+              boxShadow: '0 0 14px var(--accent-glow)',
+              flexShrink: 0
             }}>
-              <Store size={22} />
+              <Store size={20} />
             </div>
-            <div>
-              <div style={{ fontWeight: 800, fontSize: '18px', letterSpacing: '-0.02em', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                Cafe Management System
-                <span className="badge badge-amber" style={{ fontSize: '10px', padding: '2px 6px' }}>V2.0</span>
+            <div style={{ minWidth: 0 }}>
+              <div className="landing-brand-title">
+                <span>Cafe Management</span>
+                <span className="badge badge-amber hidden-mobile" style={{ fontSize: '10px', padding: '1px 5px' }}>V2.0</span>
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Enterprise REST & POS Platform</div>
+              <div className="landing-brand-subtitle">Enterprise REST & POS Platform</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div className="landing-nav-actions">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -56,8 +49,8 @@ export default function LandingPageView({ onOpenLogin, onOpenSignup, onOpenForgo
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
-                padding: '8px 12px',
+                gap: '5px',
+                padding: '6px 9px',
                 cursor: 'pointer',
               }}
               title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
@@ -75,28 +68,28 @@ export default function LandingPageView({ onOpenLogin, onOpenSignup, onOpenForgo
               )}
             </button>
 
-            <button className="btn btn-ghost" onClick={scrollToBestSellers}>
-              <Sparkles size={16} className="text-amber" />
+            <button className="btn btn-ghost btn-sm hidden-tablet" onClick={scrollToBestSellers}>
+              <Sparkles size={15} className="text-amber" />
               <span>Best Sellers</span>
             </button>
 
             {user ? (
-              <button className="btn btn-primary" onClick={onEnterApp}>
-                <span>Go to Workspace ({user.name})</span>
-                <ArrowRight size={16} />
+              <button className="btn btn-primary btn-sm" onClick={onEnterApp}>
+                <span>Workspace</span>
+                <ArrowRight size={15} />
               </button>
             ) : (
               <>
-                <button className="btn btn-secondary" onClick={onOpenForgotPassword} title="Recover account credentials">
-                  <KeyRound size={16} />
-                  <span className="hidden-mobile">Forgot Password</span>
+                <button className="btn btn-secondary btn-sm hidden-tablet" onClick={onOpenForgotPassword} title="Recover account credentials">
+                  <KeyRound size={15} />
+                  <span>Forgot Password</span>
                 </button>
-                <button className="btn btn-secondary" onClick={onOpenSignup}>
-                  <UserPlus size={16} />
+                <button className="btn btn-secondary btn-sm" onClick={onOpenSignup}>
+                  <UserPlus size={15} />
                   <span>Sign Up</span>
                 </button>
-                <button className="btn btn-primary" onClick={onOpenLogin}>
-                  <LogIn size={16} />
+                <button className="btn btn-primary btn-sm" onClick={onOpenLogin}>
+                  <LogIn size={15} />
                   <span>Login</span>
                 </button>
               </>
@@ -106,7 +99,7 @@ export default function LandingPageView({ onOpenLogin, onOpenSignup, onOpenForgo
       </header>
 
       {/* Main Content */}
-      <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 24px' }}>
+      <main className="app-main-content" style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* Hero Section */}
         <section
           className="landing-hero"
