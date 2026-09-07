@@ -36,7 +36,7 @@ public class User {
     @Column(nullable = false, length = 20)
     private String role = "user";
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", columnDefinition = "datetime", updatable = false)
     private LocalDateTime createdAt;
 
     public User() {}
